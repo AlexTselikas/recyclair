@@ -4,7 +4,7 @@ var mapOptions = {
   zoom:15
 }
 var map = new L.map('map',mapOptions);
-var layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors,Bin data provided by the community <3',maxZoom:20});
+var layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',maxZoom:20});
 map.addLayer(layer);
 var garbageBinInfo = {
     title: "Garbage Bin",
