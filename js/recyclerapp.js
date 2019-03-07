@@ -7,6 +7,8 @@ var map = new L.map('map',mapOptions);
 var layer = new L.TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',maxZoom:20});
 map.addLayer(layer);
 
+var popup = L.popup();
+
 function onMapClick(e) {
   popup
       .setLatLng(e.latlng)
