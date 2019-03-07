@@ -30,18 +30,21 @@ var bothInfo = {
     title: "Recycling and Garbage Bin",
     icon:L.icon({iconUrl:'res/both.png',iconSize:[35,40]})
 }
+var markers = L.markerClusterGroup();
 var marker = L.marker([35.316201,25.101393],bothInfo);
 marker.bindPopup("Recycling and Garbage Bin");
-marker.addTo(map);
+markers.addLayer(marker);
+
 var marker = L.marker([35.317013,25.101373],garbageBinInfo);
 marker.bindPopup("Garbage Bin");
-marker.addTo(map);
+markers.addLayer(marker);
 var marker = L.marker([35.318307 ,25.101186],garbageBinInfo);
 marker.bindPopup("Garbage Bin");
-marker.addTo(map);
+markers.addLayer(marker);
 var marker = L.marker([35.320021 ,25.102349],garbageBinInfo);
 marker.bindPopup("Garbage Bin");
-marker.addTo(map);
+markers.addLayer(marker);
 var marker = L.marker([35.319647 ,25.101875],bothInfo);
 marker.bindPopup("Recycling and Garbage Bin");
-marker.addTo(map);
+markers.addLayer(marker);
+map.addLayer(markers);
