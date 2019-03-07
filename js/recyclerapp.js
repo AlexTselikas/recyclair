@@ -6,6 +6,16 @@ var mapOptions = {
 var map = new L.map('map',mapOptions);
 var layer = new L.TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',maxZoom:20});
 map.addLayer(layer);
+
+function onMapClick(e) {
+  popup
+      .setLatLng(e.latlng)
+      .setContent("You clicked the map at <br/>" + e.latlng.toString())
+      .openOn(map);
+}
+
+map.on('click', onMapClick);
+
 var garbageBinInfo = {
     title: "Garbage Bin",
     icon:L.icon({iconUrl:'http://ermescloud.net/garbage-bin.png',iconSize:[35,40]})
