@@ -31,5 +31,5 @@ var marker = L.marker([35.320021 ,25.102349],garbageBinInfo);
 marker.bindPopup("Garbage Bin");
 marker.addTo(map);
 var marker = L.marker([35.319647 ,25.101875],bothInfo);
-marker.bindPopup("Garbage Bin");
+marker.bindPopup("Recycling and Garbage Bin");
 marker.addTo(map);
