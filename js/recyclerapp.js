@@ -20,15 +20,15 @@ map.on('click', onMapClick);
 
 var garbageBinInfo = {
     title: "Garbage Bin",
-    icon:L.icon({iconUrl:'http://ermescloud.net/garbage-bin.png',iconSize:[35,40]})
+    icon:L.icon({iconUrl:'res/garbage-bin.png',iconSize:[35,40]})
 }
 var recyclingBinInfo = {
     title: "Recycling Bin",
-    icon:L.icon({iconUrl:'http://ermescloud.net/recycling-bin.png',iconSize:[35,40]})
+    icon:L.icon({iconUrl:'res/recycling-bin.png',iconSize:[35,40]})
 }
 var bothInfo = {
     title: "Recycling and Garbage Bin",
-    icon:L.icon({iconUrl:'http://ermescloud.net/both.png',iconSize:[35,40]})
+    icon:L.icon({iconUrl:'res/both.png',iconSize:[35,40]})
 }
 var marker = L.marker([35.316201,25.101393],bothInfo);
 marker.bindPopup("Recycling and Garbage Bin");
