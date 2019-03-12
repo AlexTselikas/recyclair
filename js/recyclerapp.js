@@ -10,7 +10,7 @@ map.addLayer(layer);
 var popup = L.popup();
 var markers = L.markerClusterGroup();
 function onMapClick(e) {
-  var htmlPopup = `<a href="http://83.212.102.11:8081/setbins?xPos=`+e.latlng.lat+`&yPos=`+e.latlng.lng+`&binType=0&binEnabled=true">Add Garbage bin`
+  var htmlPopup = `<a href="https://ermescloud.net/setbins?xPos=`+e.latlng.lat+`&yPos=`+e.latlng.lng+`&binType=0&binEnabled=true">Add Garbage bin`
   popup
       .setLatLng(e.latlng)
       .setContent(`<input id="addGarbageBin" type="button" value="Add Garbage Bin"/>
@@ -24,7 +24,7 @@ function onMapClick(e) {
             console.log("successfully added a bin to the database");
             
     }
-    xmlHttp.open("GET",`http://83.212.102.11:8081/setbins?xPos=`+e.latlng.lat+`&yPos=`+e.latlng.lng+`&binType=0&binEnabled=true`,true);
+    xmlHttp.open("GET",`https://ermescloud.net/setbins?xPos=`+e.latlng.lat+`&yPos=`+e.latlng.lng+`&binType=0&binEnabled=true`,true);
     xmlHttp.send(null);
     var marker = L.marker([e.latlng.lat,e.latlng.lng],garbageBinInfo);
     marker.bindPopup("Garbage Bin");
@@ -37,7 +37,7 @@ function onMapClick(e) {
               console.log("successfully added a bin to the database");
               
       }
-      xmlHttp.open("GET",`http://83.212.102.11:8081/setbins?xPos=`+e.latlng.lat+`&yPos=`+e.latlng.lng+`&binType=1&binEnabled=true`,true);
+      xmlHttp.open("GET",`https://ermescloud.net/setbins?xPos=`+e.latlng.lat+`&yPos=`+e.latlng.lng+`&binType=1&binEnabled=true`,true);
       xmlHttp.send(null);
       var marker = L.marker([e.latlng.lat,e.latlng.lng],recyclingBinInfo);
       marker.bindPopup("Recycling Bin");
@@ -50,7 +50,7 @@ function onMapClick(e) {
                 console.log("successfully added a bin to the database");
                 
         }
-        xmlHttp.open("GET",`http://83.212.102.11:8081/setbins?xPos=`+e.latlng.lat+`&yPos=`+e.latlng.lng+`&binType=2&binEnabled=true`,true);
+        xmlHttp.open("GET",`https://ermescloud.net/setbins?xPos=`+e.latlng.lat+`&yPos=`+e.latlng.lng+`&binType=2&binEnabled=true`,true);
         xmlHttp.send(null);
         var marker = L.marker([e.latlng.lat,e.latlng.lng],bothInfo);
         marker.bindPopup("Recycling And Garbage Bin");
@@ -92,7 +92,7 @@ xmlΗttp.onreadystatechange = function() {
     }
   }
 };
-xmlΗttp.open("GET", "http://83.212.102.11:8081/getbins", true);
+xmlΗttp.open("GET", "https://ermescloud.net/getbins", true);
 xmlΗttp.send();
 
 var marker = L.marker([35.316201,25.101393],bothInfo);
