@@ -1,12 +1,12 @@
 
 var mapOptions = {
   center: [35.3180305,25.1018764],
-  zoom:15
+  zoom:17
 }
 var map = new L.map('map',mapOptions);
 var layer = new L.TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',maxZoom:20});
 map.addLayer(layer);
-
+map.locate({setView:true,maxZoom:17});
 var popup = L.popup();
 var markers = L.markerClusterGroup();
 function onMapClick(e) {
