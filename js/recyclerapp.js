@@ -60,6 +60,13 @@ function onMapClick(e) {
       
 }
 
+function onLocationError(e){
+  alert(e.message);
+}
+function locate(){
+  map.locate({setView:true,maxZoom:16});
+}
+locate();
 map.on('click', onMapClick);
 
 var garbageBinInfo = {
@@ -82,10 +89,13 @@ xmlΗttp.onreadystatechange = function() {
     for(var i =0;i < myArr.length;i++){
       if (myArr[i].BinType == 0){
         var marker = L.marker([myArr[i].BinLocationX,myArr[i].BinLocationY],garbageBinInfo);
+        marker.bindPopup("Garbage Bin");
       }else if (myArr[i].BinType == 1){
         var marker = L.marker([myArr[i].BinLocationX,myArr[i].BinLocationY],recyclingBinInfo);
+        marker.bindPopup("Recycling Bin");
       }else {
         var marker = L.marker([myArr[i].BinLocationX,myArr[i].BinLocationY],bothInfo);
+        marker.bindPopup("Garbage and Recycling Bin");
       }
       
       markers.addLayer(marker);
