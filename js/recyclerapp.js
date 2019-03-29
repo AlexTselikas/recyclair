@@ -89,7 +89,7 @@ xmlΗttp.onreadystatechange = function() {
     for(var i =0;i < myArr.length;i++){
       if (myArr[i].BinType == 0){
         var marker = L.marker([myArr[i].BinLocationX,myArr[i].BinLocationY],garbageBinInfo);
-        marker.bindPopup("Garbage Bin");
+        marker.bindPopup("Garbage Bin ");
       }else if (myArr[i].BinType == 1){
         var marker = L.marker([myArr[i].BinLocationX,myArr[i].BinLocationY],recyclingBinInfo);
         marker.bindPopup("Recycling Bin");
