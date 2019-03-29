@@ -1,4 +1,3 @@
-
 var mapOptions = {
   center: [35.3180305,25.1018764],
   zoom:17
@@ -11,11 +10,12 @@ var popup = L.popup();
 var markers = L.markerClusterGroup();
 function onMapClick(e) {
   var htmlPopup = `<a href="https://ermescloud.net/setbins?xPos=`+e.latlng.lat+`&yPos=`+e.latlng.lng+`&binType=0&binEnabled=true">Add Garbage bin`
+  var popupCss = ``
   popup
       .setLatLng(e.latlng)
-      .setContent(`<input id="addGarbageBin" type="button" value="Add Garbage Bin"/>
-      <br><input id="addRecyclingBin" type="button" value="Add Recycling Bin"/>
-      <br><input id="addBothBin" type="button" value="Add Recycling and Gargabe Bin"/>`)
+      .setContent(popupCss+`<button id="addGarbageBin" style="width:100%;margin-bottom:5px;"type="button" class="btn btn-outline-primary"> Add Garbage Bin</button>
+      <br><button id="addRecyclingBin" type="button" style="width:100%;margin-bottom:5px;"class="btn btn-outline-primary">Add Recycling Bin</button>
+      <br><button id="addBothBin" type="button" style="width:100%"class="btn btn-outline-primary">Add Recycling and Gargabe Bin</button>`)
       .openOn(map);
   document.getElementById("addGarbageBin").onclick = function() {     
   var xmlHttp = new XMLHttpRequest();
