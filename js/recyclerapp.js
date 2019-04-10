@@ -2,6 +2,7 @@ var mapOptions = {
   center: [35.3180305,25.1018764],
   zoom:17
 }
+
 var map = new L.map('map',mapOptions);
 var layer = new L.TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',maxZoom:20});
 map.addLayer(layer);
@@ -59,16 +60,8 @@ function onMapClick(e) {
       console.log(e.latlng.lat + " "+ e.latlng.lng);
       
 }
-
-function onLocationError(e){
-  alert(e.message);
-}
-function locate(){
-  map.locate({setView:true,maxZoom:16});
-}
-locate();
 map.on('click', onMapClick);
-
+L.control.locate({locateOptions:{enableHighAccuracy:true}}).addTo(map);
 var garbageBinInfo = {
     title: "Garbage Bin",
     icon:L.icon({iconUrl:'res/garbage-bin.png',iconSize:[35,40]})
