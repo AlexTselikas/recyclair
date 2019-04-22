@@ -113,6 +113,16 @@ function changeEditState(){
       editState = true;
       btnContext.innerText = "Stop editing";
       console.log("stop editing");
+      var modal = document.getElementById('myModal');
+      modal.style.display = "block";
+      window.onclick = function(event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      }
+      setTimeout(function() {
+      modal.style.display = "none";
+    },2000);
     }
 }
 xmlΗttp.open("GET", "https://ermescloud.net/getbins", true);
