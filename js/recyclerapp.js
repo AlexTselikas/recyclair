@@ -2,14 +2,17 @@ var mapOptions = {
   center: [35.3180305,25.1018764],
   zoom:17
 }
-
+var editState = false;
 var map = new L.map('map',mapOptions);
 var layer = new L.TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',maxZoom:20});
 map.addLayer(layer);
 map.locate({setView:true,maxZoom:17});
 var popup = L.popup();
 var markers = L.markerClusterGroup();
+
+
 function onMapClick(e) {
+  if(editState){
   var htmlPopup = `<a href="https://ermescloud.net/setbins?xPos=`+e.latlng.lat+`&yPos=`+e.latlng.lng+`&binType=0&binEnabled=true">Add Garbage bin`
   var popupCss = ``
   popup
@@ -30,7 +33,10 @@ function onMapClick(e) {
     var marker = L.marker([e.latlng.lat,e.latlng.lng],garbageBinInfo);
     marker.bindPopup("Garbage Bin");
     markers.addLayer(marker);
+  }
   };
+
+
   document.getElementById("addRecyclingBin").onclick = function() {     
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange= function (){
@@ -95,6 +101,20 @@ xmlΗttp.onreadystatechange = function() {
     }
   }
 };
+
+function changeEditState(){
+  var btnContext = document.getElementById("enableEdit");
+    if(editState){
+      editState = false;
+      btnContext.innerText = "Add bin";
+      console.log("click to edit");
+    }
+    else{
+      editState = true;
+      btnContext.innerText = "Stop editing";
+      console.log("stop editing");
+    }
+}
 xmlΗttp.open("GET", "https://ermescloud.net/getbins", true);
 xmlΗttp.send();
 
