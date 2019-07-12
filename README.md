@@ -41,7 +41,7 @@ You are free to either contribute on adding bin data from your area or maintaini
 
 * **Alexandros Tselikas** - *Initial work* - [AlexTselikas](https://github.com/AlexTselikas)
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/recyclerapp/recyclair/contributors) who participated in this project.
 
 ## Acknowledgments
 
