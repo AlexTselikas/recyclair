@@ -5,8 +5,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"strconv"
 	"os"
+	"strconv"
+
 	"github.com/rs/cors"
 
 	_ "github.com/lib/pq"
@@ -21,8 +22,6 @@ type BinInfo struct {
 	BinEnabled   bool
 	BinId        int
 }
-
-var binID int = 27
 
 func main() {
 	var postgres_user string
@@ -69,10 +68,9 @@ func getbinHandler(w http.ResponseWriter, r *http.Request) {
 
 }
 func setbinHandler(w http.ResponseWriter, r *http.Request) {
-	binID = binID + 1
 	sqlStatement := `
-	INSERT INTO bin_data (bin_type,bin_location_x,bin_location_y,enabled,id)
-	VALUES ($1,$2,$3,$4,$5)`
+	INSERT INTO bin_data (bin_type,bin_location_x,bin_location_y,enabled)
+	VALUES ($1,$2,$3,$4)`
 	xPos, _ := strconv.ParseFloat(r.FormValue("xPos"), 64)
 	yPos, _ := strconv.ParseFloat(r.FormValue("yPos"), 64)
 	binType, _ := strconv.ParseInt(r.FormValue("binType"), 10, 32)
@@ -83,7 +81,7 @@ func setbinHandler(w http.ResponseWriter, r *http.Request) {
 	} else if binEnabled == "false" {
 		enabled = false
 	}
-	_, err := db.Exec(sqlStatement, int32(binType), xPos, yPos, enabled, binID)
+	_, err := db.Exec(sqlStatement, int32(binType), xPos, yPos, enabled)
 	if err != nil {
 		panic(err)
 	}
