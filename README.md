@@ -47,3 +47,4 @@ See also the list of [contributors](https://github.com/recyclerapp/recyclair/con
 
 * Big thanks for GRNET S.A for free server space for hosting the backend.
 * Also big thanks to GitHub for the front end hosting
+* Thanks to OpenStreetMap.org and their contributors
