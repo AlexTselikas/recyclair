@@ -88,13 +88,13 @@ xmlΗttp.onreadystatechange = function() {
     for(var i =0;i < myArr.length;i++){
       if (myArr[i].BinType == 0){
         var marker = L.marker([myArr[i].BinLocationX,myArr[i].BinLocationY],garbageBinInfo);
-        marker.bindPopup("Garbage Bin ");
+        marker.bindPopup("Garbage Bin, ID:"+ myArr[i].BinId);
       }else if (myArr[i].BinType == 1){
         var marker = L.marker([myArr[i].BinLocationX,myArr[i].BinLocationY],recyclingBinInfo);
-        marker.bindPopup("Recycling Bin");
+        marker.bindPopup("Recycling Bin, ID:"+ myArr[i].BinId);
       }else {
         var marker = L.marker([myArr[i].BinLocationX,myArr[i].BinLocationY],bothInfo);
-        marker.bindPopup("Garbage and Recycling Bin");
+        marker.bindPopup("Garbage and Recycling Bin, ID:"+ myArr[i].BinId);
       }
       
       markers.addLayer(marker);
