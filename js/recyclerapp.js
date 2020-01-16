@@ -13,7 +13,7 @@ var markers = L.markerClusterGroup();
 
 function onMapClick(e) {
   if(editState){
-  var htmlPopup = `<a href="https://ermescloud.net/setbins?xPos=`+e.latlng.lat+`&yPos=`+e.latlng.lng+`&binType=0&binEnabled=true">Add Garbage bin`
+  var htmlPopup = `<a href="http://backend.recyclair.eu.org/setbins?xPos=`+e.latlng.lat+`&yPos=`+e.latlng.lng+`&binType=0&binEnabled=true">Add Garbage bin`
   var popupCss = ``
   popup
       .setLatLng(e.latlng)
@@ -28,7 +28,7 @@ function onMapClick(e) {
             console.log("successfully added a bin to the database");
             
     }
-    xmlHttp.open("GET",`https://ermescloud.net/setbins?xPos=`+e.latlng.lat+`&yPos=`+e.latlng.lng+`&binType=0&binEnabled=true`,true);
+    xmlHttp.open("GET",`http://backend.recyclair.eu.org/setbins?xPos=`+e.latlng.lat+`&yPos=`+e.latlng.lng+`&binType=0&binEnabled=true`,true);
     xmlHttp.send(null);
     var marker = L.marker([e.latlng.lat,e.latlng.lng],garbageBinInfo);
     marker.bindPopup("Garbage Bin");
@@ -44,7 +44,7 @@ function onMapClick(e) {
               console.log("successfully added a bin to the database");
               
       }
-      xmlHttp.open("GET",`https://ermescloud.net/setbins?xPos=`+e.latlng.lat+`&yPos=`+e.latlng.lng+`&binType=1&binEnabled=true`,true);
+      xmlHttp.open("GET",`http://backend.recyclair.eu.org/setbins?xPos=`+e.latlng.lat+`&yPos=`+e.latlng.lng+`&binType=1&binEnabled=true`,true);
       xmlHttp.send(null);
       var marker = L.marker([e.latlng.lat,e.latlng.lng],recyclingBinInfo);
       marker.bindPopup("Recycling Bin");
@@ -57,7 +57,7 @@ function onMapClick(e) {
                 console.log("successfully added a bin to the database");
                 
         }
-        xmlHttp.open("GET",`https://ermescloud.net/setbins?xPos=`+e.latlng.lat+`&yPos=`+e.latlng.lng+`&binType=2&binEnabled=true`,true);
+        xmlHttp.open("GET",`http://backend.recyclair.eu.org/setbins?xPos=`+e.latlng.lat+`&yPos=`+e.latlng.lng+`&binType=2&binEnabled=true`,true);
         xmlHttp.send(null);
         var marker = L.marker([e.latlng.lat,e.latlng.lng],bothInfo);
         marker.bindPopup("Recycling And Garbage Bin");
@@ -125,7 +125,7 @@ function changeEditState(){
     },2000);
     }
 }
-xmlΗttp.open("GET", "https://ermescloud.net/getbins", true);
+xmlΗttp.open("GET", "http://backend.recyclair.eu.org/getbins", true);
 xmlΗttp.send();
 
 var marker = L.marker([35.316201,25.101393],bothInfo);
