@@ -82,7 +82,7 @@ var bothInfo = {
 }
 var wasteBasketInfo = {
   title: "Small Waste Basket",
-  icon:L.icon({iconUrl:'res/waste_basket.jpg',iconSize:[35,40]})
+  icon:L.icon({iconUrl:'res/waste_basket.png',iconSize:[35,40]})
 }
 var xmlΗttp = new XMLHttpRequest();
 xmlΗttp.onreadystatechange = function() {
