@@ -17,7 +17,8 @@ function onMapClick(e) {
   var popupCss = ``
   popup
       .setLatLng(e.latlng)
-      .setContent(popupCss+`<button id="addGarbageBin" style="width:100%;margin-bottom:5px;"type="button" class="btn btn-outline-primary"> Add Garbage Bin</button>
+      .setContent(popupCss+`<button id="addWasteBasket" style="width:100%;margin-bottom:5px;"type="button" class="btn btn-outline-primary"> Add Waste Basket</button>
+<br><button id="addGarbageBin" style="width:100%;margin-bottom:5px;"type="button" class="btn btn-outline-primary"> Add Garbage Bin</button>
       <br><button id="addRecyclingBin" type="button" style="width:100%;margin-bottom:5px;"class="btn btn-outline-primary">Add Recycling Bin</button>
       <br><button id="addBothBin" type="button" style="width:100%"class="btn btn-outline-primary">Add Recycling and Gargabe Bin</button>`)
       .openOn(map);
@@ -36,7 +37,19 @@ function onMapClick(e) {
   }
   };
 
-
+ document.getElementById("addWasteBasket").onclick = function() {     
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange= function (){
+      if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+              console.log("successfully added a bin to the database");
+              
+      }
+      xmlHttp.open("GET",`https://backend.recyclair.eu.org/setbins?xPos=`+e.latlng.lat+`&yPos=`+e.latlng.lng+`&binType=3&binEnabled=true`,true);
+      xmlHttp.send(null);
+      var marker = L.marker([e.latlng.lat,e.latlng.lng],recyclingBinInfo);
+      marker.bindPopup("Recycling Bin");
+      markers.addLayer(marker);
+    };
   document.getElementById("addRecyclingBin").onclick = function() {     
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange= function (){
@@ -46,7 +59,7 @@ function onMapClick(e) {
       }
       xmlHttp.open("GET",`https://backend.recyclair.eu.org/setbins?xPos=`+e.latlng.lat+`&yPos=`+e.latlng.lng+`&binType=1&binEnabled=true`,true);
       xmlHttp.send(null);
-      var marker = L.marker([e.latlng.lat,e.latlng.lng],recyclingBinInfo);
+      var marker = L.marker([e.latlng.lat,e.latlng.lng],wasteBasketInfo);
       marker.bindPopup("Recycling Bin");
       markers.addLayer(marker);
     };
