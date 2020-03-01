@@ -80,7 +80,10 @@ var bothInfo = {
     title: "Recycling and Garbage Bin",
     icon:L.icon({iconUrl:'res/both.png',iconSize:[35,40]})
 }
-
+var wasteBasketInfo = {
+  title: "Small Waste Basket",
+  icon:L.icon({iconUrl:'res/waste_basket.jpg',iconSize:[35,40]})
+}
 var xmlΗttp = new XMLHttpRequest();
 xmlΗttp.onreadystatechange = function() {
   if (this.readyState == 4 && this.status == 200) {
@@ -92,9 +95,12 @@ xmlΗttp.onreadystatechange = function() {
       }else if (myArr[i].BinType == 1){
         var marker = L.marker([myArr[i].BinLocationX,myArr[i].BinLocationY],recyclingBinInfo);
         marker.bindPopup("Recycling Bin, ID:"+ myArr[i].BinId);
-      }else {
+      }else if (myArr[i].BinType == 2) {
         var marker = L.marker([myArr[i].BinLocationX,myArr[i].BinLocationY],bothInfo);
         marker.bindPopup("Garbage and Recycling Bin, ID:"+ myArr[i].BinId);
+      }else {
+      var marker = L.marker([myArr[i].BinLocationX,myArr[i].BinLocationY],wasteBasketInfo);
+        marker.bindPopup("Small Waste Basket, ID:"+ myArr[i].BinId);
       }
       
       markers.addLayer(marker);
