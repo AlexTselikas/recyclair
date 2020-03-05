@@ -82,26 +82,80 @@ function onMapClick(e) {
 map.on('click', onMapClick);
 var zoomState = false;
 var currentZoomLevel = -1;
+var currentZoomState = false;
+var res;
 map.on("moveend", function () {
   console.log("zoom level",map.getZoom())
   console.log("zoom state",zoomState)
     if (map.getZoom() >= 14) {
-      if (!zoomState) {
+      if (!zoomState ) {
+        if (!currentZoomState){
+          currentZoomLevel = map.getZoom();
+          currentZoomState = true;
+          res = map.getBounds().toBBoxString().split(",")
+        }
+        if (map.getZoom() == currentZoomLevel){
+        console.log("current zool level",currentZoomLevel);
         console.log("zoomed in enough")
         console.log(map.getBounds())
-        var res = map.getBounds().toBBoxString().split(",")
+        //var res = map.getBounds().toBBoxString().split(",")
         console.log("SW lat:", res[1], " lon:", res[0], "NE lat", res[3], "lon:", res[2])
         xmlΗttp.open("GET", "https://backend.recyclair.eu.org/getbins?sw_lat=" + res[1] + "&sw_lon=" + res[0] + "&ne_lat=" + res[3] + "&ne_lon=" + res[2], true);
         xmlΗttp.send();
-        currentZoomLevel = map.getZoom()
+        var modal = document.getElementById('loadingModal');
+        modal.style.display = "block";
         zoomState = true;
       }
-
+    }
+    var currBounds = map.getBounds().toBBoxString().split(",")
+    if ((currBounds[0]>(parseFloat(res[0])+parseFloat(res[2]))/2))
+    { 
+      markers.clearLayers();
+      res = map.getBounds().toBBoxString().split(",")
+      xmlΗttp.open("GET", "https://backend.recyclair.eu.org/getbins?sw_lat=" + res[1] + "&sw_lon=" + res[0] + "&ne_lat=" + res[3] + "&ne_lon=" + res[2], true);
+      xmlΗttp.send();
+      var modal = document.getElementById('loadingModal');
+    modal.style.display = "block";
+      console.log("have to load new bins")
+    }
+    if(((parseFloat(currBounds[0])+parseFloat(currBounds[2]))/2) < res[0]){
+      console.log("have to load new bins")
+      markers.clearLayers();
+      res = map.getBounds().toBBoxString().split(",")
+      xmlΗttp.open("GET", "https://backend.recyclair.eu.org/getbins?sw_lat=" + res[1] + "&sw_lon=" + res[0] + "&ne_lat=" + res[3] + "&ne_lon=" + res[2], true);
+      xmlΗttp.send();
+      var modal = document.getElementById('loadingModal');
+    modal.style.display = "block";
+    }
+    if(currBounds[1]>(parseFloat(res[1])+parseFloat(res[3]))/2){
+      console.log("have to load new bins");
+      markers.clearLayers();
+      res = map.getBounds().toBBoxString().split(",")
+      xmlΗttp.open("GET", "https://backend.recyclair.eu.org/getbins?sw_lat=" + res[1] + "&sw_lon=" + res[0] + "&ne_lat=" + res[3] + "&ne_lon=" + res[2], true);
+      xmlΗttp.send();
+      var modal = document.getElementById('loadingModal');
+    modal.style.display = "block";
+    }
+    if(((parseFloat(currBounds[1])+parseFloat(currBounds[3]))/2) < res[1]){
+      console.log("have to load new bins")
+      markers.clearLayers();
+      res = map.getBounds().toBBoxString().split(",")
+      xmlΗttp.open("GET", "https://backend.recyclair.eu.org/getbins?sw_lat=" + res[1] + "&sw_lon=" + res[0] + "&ne_lat=" + res[3] + "&ne_lon=" + res[2], true);
+      xmlΗttp.send();
+      var modal = document.getElementById('loadingModal');
+    modal.style.display = "block";
+    }
     }  
     if (currentZoomLevel >= 14 && zoomState) {
-      markers.clearLayers();
+     // markers.clearLayers();
       //na kanei update vazontas mono ta auta poy einai ektos tou bound poy exei valei idi
+      //zoomState = false;
+
+    }
+    if (map.getZoom() < 14){
+      currentZoomState = false;
       zoomState = false;
+      markers.clearLayers();
 
     }
     console.log(map.getBounds().toBBoxString().split(","))
@@ -144,6 +198,8 @@ xmlΗttp.onreadystatechange = function () {
 
       markers.addLayer(marker);
     }
+    var modal = document.getElementById('loadingModal');
+    modal.style.display = "none";
   }
 };
 
