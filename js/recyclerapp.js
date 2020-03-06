@@ -107,8 +107,22 @@ map.on("moveend", function () {
         zoomState = true;
       }
     }
+
     var currBounds = map.getBounds().toBBoxString().split(",")
-    if ((currBounds[0]>(parseFloat(res[0])+parseFloat(res[2]))/2))
+    var currCenter = map.getCenter();
+    console.log(currCenter);
+    var idk = L.latLng(currCenter);
+
+    console.log(idk.lat);
+    
+    console.log(idk.lng);
+    console.log("NE lon:",res[2]);
+    console.log("NE lat",res[3]);
+    console.log("SW lon:",res[0]);
+    console.log("SW lat",res[1]);
+    console.log("res[0]+res[2]/2",(parseFloat(res[0])+parseFloat(res[2]))/2);
+
+    if (idk.lng>res[2])
     { 
       markers.clearLayers();
       res = map.getBounds().toBBoxString().split(",")
@@ -116,10 +130,10 @@ map.on("moveend", function () {
       xmlΗttp.send();
       var modal = document.getElementById('loadingModal');
     modal.style.display = "block";
-      console.log("have to load new bins")
-    }
-    if(((parseFloat(currBounds[0])+parseFloat(currBounds[2]))/2) < res[0]){
-      console.log("have to load new bins")
+      console.log("have to load new bins 1")
+     }
+    if(idk.lng<res[0]){
+      console.log("have to load new bins 2")
       markers.clearLayers();
       res = map.getBounds().toBBoxString().split(",")
       xmlΗttp.open("GET", "https://backend.recyclair.eu.org/getbins?sw_lat=" + res[1] + "&sw_lon=" + res[0] + "&ne_lat=" + res[3] + "&ne_lon=" + res[2], true);
@@ -127,8 +141,8 @@ map.on("moveend", function () {
       var modal = document.getElementById('loadingModal');
     modal.style.display = "block";
     }
-    if(currBounds[1]>(parseFloat(res[1])+parseFloat(res[3]))/2){
-      console.log("have to load new bins");
+    if(idk.lat>res[3]){
+      console.log("have to load new bins 3");
       markers.clearLayers();
       res = map.getBounds().toBBoxString().split(",")
       xmlΗttp.open("GET", "https://backend.recyclair.eu.org/getbins?sw_lat=" + res[1] + "&sw_lon=" + res[0] + "&ne_lat=" + res[3] + "&ne_lon=" + res[2], true);
@@ -136,8 +150,8 @@ map.on("moveend", function () {
       var modal = document.getElementById('loadingModal');
     modal.style.display = "block";
     }
-    if(((parseFloat(currBounds[1])+parseFloat(currBounds[3]))/2) < res[1]){
-      console.log("have to load new bins")
+    if(idk.lat < res[1]){
+      console.log("have to load new bins 4")
       markers.clearLayers();
       res = map.getBounds().toBBoxString().split(",")
       xmlΗttp.open("GET", "https://backend.recyclair.eu.org/getbins?sw_lat=" + res[1] + "&sw_lon=" + res[0] + "&ne_lat=" + res[3] + "&ne_lon=" + res[2], true);
@@ -181,6 +195,7 @@ var xmlΗttp = new XMLHttpRequest();
 xmlΗttp.onreadystatechange = function () {
   if (this.readyState == 4 && this.status == 200) {
     var myArr = JSON.parse(this.responseText);
+    if (myArr != null ){
     for (var i = 0; i < myArr.length; i++) {
       if (myArr[i].BinType == 0) {
         var marker = L.marker([myArr[i].BinLocationX, myArr[i].BinLocationY], garbageBinInfo);
@@ -198,6 +213,8 @@ xmlΗttp.onreadystatechange = function () {
 
       markers.addLayer(marker);
     }
+  }
+  
     var modal = document.getElementById('loadingModal');
     modal.style.display = "none";
   }
