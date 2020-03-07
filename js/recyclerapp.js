@@ -174,7 +174,7 @@ map.on("moveend", function () {
     }
     console.log(map.getBounds().toBBoxString().split(","))
 });
-L.control.locate({ locateOptions: { enableHighAccuracy: true } }).addTo(map);
+L.control.locate({ locateOptions: { enableHighAccuracy: true ,maxZoom:16} }).addTo(map);
 var garbageBinInfo = {
   title: "Garbage Bin",
   icon: L.icon({ iconUrl: 'res/garbage-bin.png', iconSize: [35, 40] })
