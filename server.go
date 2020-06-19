@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"os"
 	"strconv"
 
 	"github.com/rs/cors"
@@ -24,19 +23,14 @@ type BinInfo struct {
 }
 
 func main() {
-	var postgres_user string
-	postgres_user = os.Getenv("POSTGRES_USER")
-	fmt.Println(postgres_user)
-	var postgres_password string
-	postgres_password = os.Getenv("POSTGRES_PASSWORD")
-	fmt.Println(postgres_password)
-	var postgres_db_name string
-	postgres_db_name = os.Getenv("POSTGRES_DB_name")
-	db, _ = sql.Open("postgres", "user="+postgres_user+" password="+postgres_password+" dbname="+postgres_db_name+" host=127.0.0.1 sslmode=disable")
+	db, _ = sql.Open("postgres", "user=####### password=###### dbname=##### host=127.0.0.1 port=5432 sslmode=disable")
 	defer db.Close()
 	mux := http.NewServeMux()
 	mux.HandleFunc("/setbins", setbinHandler)
 	mux.HandleFunc("/getbins", getbinHandler)
+	mux.HandleFunc("/deletebin", deleteBinHandler)
+	//http.HandleFunc("/setbins", setbinHandler)
+	http.HandleFunc("/test", test)
 	c := cors.New(cors.Options{
 		AllowedOrigins: []string{"http://127.0.0.1:5500", "http://localhost:5500"},
 	})
@@ -46,7 +40,16 @@ func main() {
 }
 func getbinHandler(w http.ResponseWriter, r *http.Request) {
 	var Bins []BinInfo
-	rows, err := db.Query("SELECT * FROM bin_data")
+	swLat, err1 := strconv.ParseFloat(r.FormValue("sw_lat"), 64)
+	swLon, err2 := strconv.ParseFloat(r.FormValue("sw_lon"), 64)
+	neLat, err3 := strconv.ParseFloat(r.FormValue("ne_lat"), 64)
+	neLon, err4 := strconv.ParseFloat(r.FormValue("ne_lon"), 64)
+	if swLat == 0 || swLon == 0 || neLat == 0 || neLon == 0 || err1 != nil || err2 != nil || err3 != nil || err4 != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	sqlStatement := "SELECT * FROM bin_data WHERE bin_location_x >= $1 AND bin_location_y >= $2 AND bin_location_x <= $3 AND bin_location_y <= $4"
+	rows, err := db.Query(sqlStatement, swLat, swLon, neLat, neLon)
 	checkErr(err)
 	for rows.Next() {
 		var bin_type int
@@ -68,11 +71,23 @@ func getbinHandler(w http.ResponseWriter, r *http.Request) {
 
 }
 func setbinHandler(w http.ResponseWriter, r *http.Request) {
-	sqlStatement := `
-	INSERT INTO bin_data (bin_type,bin_location_x,bin_location_y,enabled)
-	VALUES ($1,$2,$3,$4)`
+	sqlStatement := `SELECT exists (SELECT 1 FROM bin_data WHERE bin_location_x = $1 AND bin_location_y=$2 LIMIT 1);`
+	var result bool
 	xPos, _ := strconv.ParseFloat(r.FormValue("xPos"), 64)
 	yPos, _ := strconv.ParseFloat(r.FormValue("yPos"), 64)
+	row := db.QueryRow(sqlStatement, xPos, yPos)
+	err := row.Scan(&result)
+	if err != nil {
+		w.WriteHeader(http.StatusBadGateway)
+		return
+	}
+	if result == true {
+		w.WriteHeader(http.StatusBadGateway)
+		return
+	}
+	sqlStatement = `
+	INSERT INTO bin_data (bin_type,bin_location_x,bin_location_y,enabled)
+	VALUES ($1,$2,$3,$4)`
 	binType, _ := strconv.ParseInt(r.FormValue("binType"), 10, 32)
 	binEnabled := r.FormValue("binEnabled")
 	enabled := false
@@ -81,10 +96,30 @@ func setbinHandler(w http.ResponseWriter, r *http.Request) {
 	} else if binEnabled == "false" {
 		enabled = false
 	}
-	_, err := db.Exec(sqlStatement, int32(binType), xPos, yPos, enabled)
+	_, err = db.Exec(sqlStatement, int32(binType), xPos, yPos, enabled)
 	if err != nil {
 		panic(err)
 	}
+}
+func deleteBinHandler(w http.ResponseWriter, r *http.Request) {
+	binId, _ := strconv.ParseInt(r.FormValue("id"), 10, 32)
+	sqlStatement := `UPDATE bin_data SET enabled = FALSE WHERE id = $1`
+	_, err := db.Exec(sqlStatement, binId)
+	if err != nil {
+		checkErr(err)
+	}
+}
+func test(w http.ResponseWriter, r *http.Request) {
+	xPos, _ := strconv.ParseFloat(r.FormValue("xPos"), 64)
+	yPos, _ := strconv.ParseFloat(r.FormValue("yPos"), 64)
+	binType, _ := strconv.ParseInt(r.FormValue("binType"), 10, 32)
+	binEnabled := r.FormValue("binEnabled")
+	fmt.Println(xPos)
+	fmt.Println(yPos)
+	fmt.Println(binType)
+	fmt.Println(binEnabled)
+	w.Write([]byte("y position:" + r.FormValue("yPos")))
+
 }
 func checkErr(err error) {
 	if err != nil {
