@@ -244,9 +244,6 @@ function changeEditState() {
   }
 }
 
-var marker = L.marker([35.316201, 25.101393], bothInfo);
-marker.bindPopup("Recycling and Garbage Bin");
-markers.addLayer(marker);
 
 var marker = L.marker([35.317013, 25.101373], garbageBinInfo);
 marker.bindPopup("Garbage Bin");
