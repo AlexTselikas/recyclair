@@ -261,3 +261,5 @@ var marker = L.marker([35.319647, 25.101875], bothInfo);
 marker.bindPopup("Recycling and Garbage Bin");
 markers.addLayer(marker);
 map.addLayer(markers);
+
+//Copyright Alexandros Tselikas
