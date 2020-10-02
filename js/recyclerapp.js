@@ -246,15 +246,4 @@ function changeEditState() {
 
 
 
-var marker = L.marker([35.318307, 25.101186], garbageBinInfo);
-marker.bindPopup("Garbage Bin");
-markers.addLayer(marker);
-var marker = L.marker([35.320021, 25.102349], garbageBinInfo);
-marker.bindPopup("Garbage Bin");
-markers.addLayer(marker);
-var marker = L.marker([35.319647, 25.101875], bothInfo);
-marker.bindPopup("Recycling and Garbage Bin");
-markers.addLayer(marker);
-map.addLayer(markers);
-
 //Copyright Alexandros Tselikas
