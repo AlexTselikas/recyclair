@@ -243,8 +243,6 @@ function changeEditState() {
     }, 2000);
   }
 }
-// xmlΗttp.open("GET", "https://backend.recyclair.eu.org/getbins", true);
-// xmlΗttp.send();
 
 var marker = L.marker([35.316201, 25.101393], bothInfo);
 marker.bindPopup("Recycling and Garbage Bin");
