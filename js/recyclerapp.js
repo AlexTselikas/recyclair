@@ -226,6 +226,6 @@ function changeEditState() {
   }
 }
 
-
+map.addLayer(markers);
 
 //Copyright Alexandros Tselikas
