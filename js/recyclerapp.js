@@ -76,7 +76,6 @@ function onMapClick(e) {
     marker.bindPopup("Recycling And Garbage Bin");
     markers.addLayer(marker);
   };
-  console.log(e.latlng.lat + " " + e.latlng.lng);
 
 }
 map.on('click', onMapClick);
@@ -85,8 +84,6 @@ var currentZoomLevel = -1;
 var currentZoomState = false;
 var res;
 map.on("moveend", function () {
-  console.log("zoom level",map.getZoom())
-  console.log("zoom state",zoomState)
     if (map.getZoom() >= 14) {
       if (!zoomState ) {
         if (!currentZoomState){
@@ -95,11 +92,8 @@ map.on("moveend", function () {
           res = map.getBounds().toBBoxString().split(",")
         }
         if (map.getZoom() == currentZoomLevel){
-        console.log("current zool level",currentZoomLevel);
-        console.log("zoomed in enough")
         console.log(map.getBounds())
         //var res = map.getBounds().toBBoxString().split(",")
-        console.log("SW lat:", res[1], " lon:", res[0], "NE lat", res[3], "lon:", res[2])
         xmlΗttp.open("GET", "https://backend.recyclair.eu.org/getbins?sw_lat=" + res[1] + "&sw_lon=" + res[0] + "&ne_lat=" + res[3] + "&ne_lon=" + res[2], true);
         xmlΗttp.send();
         var modal = document.getElementById('loadingModal');
@@ -110,17 +104,8 @@ map.on("moveend", function () {
 
     var currBounds = map.getBounds().toBBoxString().split(",")
     var currCenter = map.getCenter();
-    console.log(currCenter);
     var idk = L.latLng(currCenter);
 
-    console.log(idk.lat);
-    
-    console.log(idk.lng);
-    console.log("NE lon:",res[2]);
-    console.log("NE lat",res[3]);
-    console.log("SW lon:",res[0]);
-    console.log("SW lat",res[1]);
-    console.log("res[0]+res[2]/2",(parseFloat(res[0])+parseFloat(res[2]))/2);
 
     if (idk.lng>res[2])
     { 
@@ -172,7 +157,6 @@ map.on("moveend", function () {
       markers.clearLayers();
 
     }
-    console.log(map.getBounds().toBBoxString().split(","))
 });
 L.control.locate({ locateOptions: { enableHighAccuracy: true ,maxZoom:16} }).addTo(map);
 var garbageBinInfo = {
@@ -225,12 +209,10 @@ function changeEditState() {
   if (editState) {
     editState = false;
     btnContext.innerText = "Add bin";
-    console.log("click to edit");
   }
   else {
     editState = true;
     btnContext.innerText = "Stop editing";
-    console.log("stop editing");
     var modal = document.getElementById('myModal');
     modal.style.display = "block";
     window.onclick = function (event) {
